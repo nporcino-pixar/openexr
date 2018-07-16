@@ -58,7 +58,7 @@ INSTALL ( TARGETS PyImath
 )
 
 INSTALL (DIRECTORY ./
-    DESTINATION include
+    DESTINATION include/OpenEXR
     FILES_MATCHING PATTERN "*.h"
 )
 

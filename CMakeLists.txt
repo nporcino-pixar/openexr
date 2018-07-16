@@ -12,14 +12,14 @@ project(OpenEXR VERSION ${OPENEXR_VERSION})
 # User Options
 option(BUILD_OPENEXR        "Build OpenEXR. IlmBase is always built." ON)
 option(BUILD_PYTHON_LIBS    "Build the Python bindings" ON)
-option(BUILD_VIEWERS        "Build the viewers"         ON)
+option(BUILD_VIEWERS        "Build the viewers"         OFF)
 
 option(BUILD_SHARED_LIBS    "Build Shared Libraries"    ON)
 option(BUILD_STATIC_LIBS    "Build Static Libraries"    OFF)
 option(NAMESPACE_VERSIONING "Use Namespace Versioning"  ON)
 option(FORCE_CXX03          "Force CXX03"               OFF)
 option(ENABLE_TESTS         "Enable the tests"          ON)
-set(PYTHON_VERSION "36" CACHE STRING "Boost >= 1.67 ? 27, 36. Otherwise 2 or 3")
+set(PYTHON_VERSION "27" CACHE STRING "Boost >= 1.67 ? 27, 36. Otherwise 2 or 3")
 # For more info on finding boost python:
 # https://cmake.org/cmake/help/v3.11/module/FindBoost.html
 
@@ -101,6 +101,7 @@ if (BUILD_PYTHON_LIBS)
 endif()
 
 if(BUILD_VIEWERS)
+  message(WARNING "Viewers are currently out of order. Building anyway")
   SET (FLTK_SKIP_FLUID 1)
   find_package(FLTK)
   if(NOT FLTK_FOUND)

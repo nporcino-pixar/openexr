@@ -13,9 +13,9 @@ ADD_EXECUTABLE ( b44ExpLogTable
 )
 
 TARGET_LINK_LIBRARIES ( b44ExpLogTable
-  Half${ILMBASE_LIBSUFFIX}
-  IlmThread${ILMBASE_LIBSUFFIX}
-  Iex${ILMBASE_LIBSUFFIX}
+  IlmBase::Half
+  IlmBase::IlmThread
+  IlmBase::Iex
   ${PTHREAD_LIB}
 )
 
@@ -44,9 +44,9 @@ IF (BUILD_SHARED_LIBS AND WIN32)
 ENDIF()
 
 TARGET_LINK_LIBRARIES ( dwaLookups
-  Half${ILMBASE_LIBSUFFIX}
-  IlmThread${ILMBASE_LIBSUFFIX}
-  Iex${ILMBASE_LIBSUFFIX}
+  IlmBase::Half
+  IlmBase::IlmThread
+  IlmBase::Iex
   ${PTHREAD_LIB}
 )
 
@@ -175,11 +175,12 @@ IF ( BUILD_SHARED_LIBS )
   ENDIF ()
 
   TARGET_LINK_LIBRARIES ( IlmImf
-    Half${ILMBASE_LIBSUFFIX}
-    Iex${ILMBASE_LIBSUFFIX}
-    Imath${ILMBASE_LIBSUFFIX}
-    IlmThread${ILMBASE_LIBSUFFIX}
-    ${PTHREAD_LIB} ${ZLIB_LIBRARIES}
+    PUBLIC  IlmBase::Iex
+    PUBLIC  IlmBase::Half
+    PUBLIC  IlmBase::Imath
+    PUBLIC  IlmBase::IlmThread
+    PRIVATE ${PTHREAD_LIB} 
+    PRIVATE ${ZLIB_LIBRARIES}
   )
 
   SET_TARGET_PROPERTIES ( IlmImf
@@ -316,3 +317,9 @@ INSTALL (
   DESTINATION
     include/OpenEXR
 )
+
+if (BUILD_SHARED_LIBS)
+    add_library(OpenEXR::IlmImf ALIAS IlmImf)
+else()
+    add_library(OpenEXR::IlmImf ALIAS IlmImf_static)
+endif()
